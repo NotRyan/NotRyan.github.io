@@ -1,58 +1,132 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>HTML Learning</title>
-<style>
-p {
-    color: red;
-}
-#paragraph2 {
-    color: blue;
-}
-p.type1 {
-    color:green
-}
-a:link{
-color:green
-}
-a:visited{
-color:red
-}
-img.textIcon{
-width:42px;height:42px
-}
-#sloth{
-width:25%;
-height:25%;
-}
-</style>
+    <title>HTML Learning</title>
+    <style>
+        p {
+            color: red;
+        }
+        
+        #paragraph2 {
+            color: blue;
+        }
+        
+        p.type1 {
+            color: green
+        }
+        
+        a:link {
+            color: green
+        }
+        
+        a:visited {
+            color: red
+        }
+        
+        img.textIcon {
+            width: 42px;
+            height: 42px
+        }
+        
+        #sloth {
+            width: 25%;
+            height: 25%;
+        }
+
+    </style>
 </head>
+
 <body>
 
-<h1>This is a heading</h1>
+    <h1>This is a heading</h1>
 
-<img src="/img/sloth.jpeg" alt="Sloth not found" id="sloth">
-<p style="border:10px solid black;padding:10px;margin:15px">This is paragraph ONE</p>
-<p id="paragraph2">This is a paragraph.</p>
+    <img src="/img/sloth.jpeg" alt="Sloth not found" id="sloth">
+    <p style="border:10px solid black;padding:10px;margin:15px">This is paragraph ONE</p>
+    <p id="paragraph2">This is a paragraph.</p>
 
-<p class="type1">This is a paragraph.</p>
+    <p class="type1">This is a paragraph.</p>
 
-<p>Wowee look at these <img src="/img/sloth.jpeg" class="textIcon" onclick="changeParagraph()"> ZANY slothss</p>
-
-<a href="http://www.google.com" target="_blank">Google!</a>
-<br>
-<a href="htmlpage2.html">The second page</a>
-
-<script>
-function changeParagraph(){
-	var para1 = document.getElementById("paragraph2");
-	if (para1.innerHTML.match("Suprise!")){
-		para1.innerHTML="No";
-	} else {
-		para1.innerHTML="Suprise!";
-	}
-}	
-</script>
+    <p>Wowee look at these <img src="/img/sloth.jpeg" class="textIcon" onclick="changeParagraph()"> ZANY slothss</p>
+    <a href="htmlpage2.html">The second page</a>
+    <br>
+    
+    <div id="canvasOutput"></div>
+    <br>
+    <img src="/img/slothCircle.jpeg" class="textIcon" onclick="startMovement()" id = "slothBall">
+    <canvas id = "myCanvas" width="400" height="200" style="border:5px solid #000000;"</canvas>
+    
+    <script>
+        var rightWall=379;
+        var leftWall=0;
+        var topWall=0;
+        var bottomWall=180;
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+        
+        var numOfBounces=0;
+        
+        var ball = new particle(200,100,15,4);
+        
+        function particle(x,y,vector,speed){
+            this.x=x;
+            this.y=y;
+            this.vector=vector;
+            this.speed=speed;
+            this.drawParticle=function(){
+                /*ctx.beginPath();
+                ctx.arc(this.x,this.y,5,0,2*Math.PI);
+                ctx.stroke();*/
+                ctx.drawImage(document.getElementById("slothBall"),this.x,this.y);
+            };
+        }
+        function changeParagraph() {
+            var para1 = document.getElementById("paragraph2");
+            if (para1.innerHTML.match("Suprise!")) {
+                para1.innerHTML = "No";
+            } else {
+                para1.innerHTML = "Suprise!";
+            }
+        }
+        
+        function draw() {
+            ctx.clearRect(0,0,c.width,c.height);
+            ball.drawParticle();            
+            document.getElementById("canvasOutput").innerHTML="x: "+ball.x+" y: "+ball.y+"<br> Angle(Radians): "+ball.vector%(2*Math.PI)+" Angle(Degrees): "+(ball.vector*(180/Math.PI))%360;
+            move();
+            checkBounce();
+            document.getElementById("paragraph2").innerHTML=(numOfBounces);
+        }
+        function move() {
+            ball.x+=Math.cos(ball.vector)*ball.speed;
+            ball.y+=Math.sin(ball.vector)*ball.speed;
+        }//ball.x>=rightWall&&(ball.vector>(3*Math.PI/2)||ball.vector<(Math.PI/2))
+        function checkBounce(){
+            if (ball.x>=rightWall&&(ball.vector>(3*Math.PI/2)||ball.vector<(Math.PI/2))){
+                ball.vector=(Math.PI/2-ball.vector)+Math.PI/2;
+                numOfBounces++;
+            } else if (ball.x<=leftWall&&(ball.vector>Math.PI/2||ball.vector<3*Math.PI/2)){
+                ball.vector=(Math.PI-ball.vector);
+                numOfBounces++;
+            } else if (ball.y<=topWall&&(ball.vector>Math.PI||ball.vector<Math.PI*2)){
+                ball.vector=(Math.PI*2-ball.vector);
+                numOfBounces++;
+            } else if (ball.y>=bottomWall&&(ball.vector>0||ball.vector<Math.PI)){
+                ball.vector=(Math.PI*2-ball.vector);
+                numOfBounces++;
+            }
+        }
+        function bounce(){
+            ball.vector=(Math.PI/2+ball.vector);
+        }
+        
+        function startMovement(){
+            setInterval(function(){
+                draw();
+            },100);
+        }
+    </script>
+    <script src="/js/BasicScripts.js"></script>
 </body>
-</html>
 
+</html>
