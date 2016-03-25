@@ -66,7 +66,7 @@
         
         var numOfBounces=0;
         
-        var ball = new particle(200,100,15,4);
+        var ball = new particle(200,100,.5934,2);
         
         function particle(x,y,vector,speed){
             this.x=x;
@@ -123,7 +123,7 @@
         function startMovement(){
             setInterval(function(){
                 draw();
-            },100);
+            },10);
         }
     </script>
     <script src="/js/BasicScripts.js"></script>
