@@ -7,28 +7,28 @@
         p {
             color: red;
         }
-        
+
         #paragraph2 {
             color: blue;
         }
-        
+
         p.type1 {
             color: green
         }
-        
+
         a:link {
             color: green
         }
-        
+
         a:visited {
             color: red
         }
-        
+
         img.textIcon {
             width: 42px;
             height: 42px
         }
-        
+
         #sloth {
             width: 25%;
             height: 25%;
@@ -45,17 +45,17 @@
     <p style="border:10px solid black;padding:10px;margin:15px">This is paragraph ONE</p>
     <p id="paragraph2">This is a paragraph.</p>
 
-    <p class="type1">This is a paragraph.</p>
+    <p class="type1">This is a paragraph. I don't know if you can tell, but I don't know any css.</p>
 
     <p>Wowee look at these <img src="/img/sloth.jpeg" class="textIcon" onclick="changeParagraph()"> ZANY slothss</p>
     <a href="htmlpage2.html">The second page</a>
     <br>
-    
+
     <div id="canvasOutput"></div>
     <br>
     <img src="/img/slothCircle.jpeg" class="textIcon" onclick="startMovement()" id = "slothBall">
     <canvas id = "myCanvas" width="400" height="200" style="border:5px solid #000000;"</canvas>
-    
+
     <script>
         var rightWall=379;
         var leftWall=0;
@@ -63,11 +63,11 @@
         var bottomWall=180;
         var c = document.getElementById("myCanvas");
         var ctx = c.getContext("2d");
-        
+
         var numOfBounces=0;
-        
+
         var ball = new particle(200,100,.5934,2);
-        
+
         function particle(x,y,vector,speed){
             this.x=x;
             this.y=y;
@@ -88,10 +88,10 @@
                 para1.innerHTML = "Suprise!";
             }
         }
-        
+
         function draw() {
             ctx.clearRect(0,0,c.width,c.height);
-            ball.drawParticle();            
+            ball.drawParticle();
             document.getElementById("canvasOutput").innerHTML="x: "+ball.x+" y: "+ball.y+"<br> Angle(Radians): "+ball.vector%(2*Math.PI)+" Angle(Degrees): "+(ball.vector*(180/Math.PI))%360;
             move();
             checkBounce();
@@ -119,7 +119,7 @@
         function bounce(){
             ball.vector=(Math.PI/2+ball.vector);
         }
-        
+
         function startMovement(){
             setInterval(function(){
                 draw();
