@@ -39,7 +39,7 @@
    xm = resultX2 - resultX1 / (baseX2 - baseX1);
    ym = resultY2 - resultY1 / (baseY2 - baseY1);
    xc = resultX1 - (baseX1 * xm);
-   yc = resultY2 - (baseY1 * ym);
+   yc = resultY1 - (baseY1 * ym);
    document.getElementById("equation").innerHTML="Equations:<br>x = "+xm+"b + "+xc+"<br>y = "+ym+"b + "+yc;
  }
 
