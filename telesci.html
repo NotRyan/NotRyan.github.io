@@ -18,7 +18,7 @@
 
  <button type="button" onclick="buttonCalc()">Get coordinates for these values</button>
  <p id="results">Results<br></p>
-
+ <p id = "debug">debug</p>
  <script>
  var xm = 0;
  var ym = 0;
@@ -36,16 +36,19 @@
    var resultX2=document.getElementById("resultX2").value;
    var resultY2=document.getElementById("resultY2").value;
 
-   var xm = resultX2 - resultX1 / (baseX2 - baseX1);
-   var ym = resultY2 - resultY1 / (baseY2 - baseY1);
-   var xc = resultX1 - (baseX1 * xm);
-   var yc = resultY2 - (baseY1 * ym);
+   xm = resultX2 - resultX1 / (baseX2 - baseX1);
+   ym = resultY2 - resultY1 / (baseY2 - baseY1);
+   xc = resultX1 - (baseX1 * xm);
+   yc = resultY2 - (baseY1 * ym);
    document.getElementById("equation").innerHTML="Equations:<br>x = "+xm+"b + "+xc+"<br>y = "+ym+"b + "+yc;
  }
 
  function calculate(xm, ym, xc, yc, xDes, yDes){
+
    var xComp = (xDes/xm)-(xc/xm);
    var yComp = (yDes/ym)-(yc/ym);
+
+   document.getElementById("debug").innerHTML=xm+" "+ym+" "+xc+" "+yc+" "+xDes+" "+yDes+" "+xComp;
    return {"x":xComp,"y":yComp};
  }
  function buttonCalc(){
