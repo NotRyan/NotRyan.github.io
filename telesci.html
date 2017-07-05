@@ -5,12 +5,55 @@
 </head>
 <body>
   <h2>External JavaScript</h2>
-  <p id="demo">A Paragraph.</p>
+  <p id="equation">Equation</p>
+  <p>Base X 1: <input type="number" id="baseX1" value="50"> -> <input type="number" id="resultX1" value="50"></p>
+  <p>Base Y 1: <input type="number" id="baseY1" value="50"> -> <input type="number" id="resultY1" value="50"></p>
+  <p>Base X 2: <input type="number" id="baseX2" value="51"> -> <input type="number" id="resultX2" value="50"></p>
+  <p>Base Y 2: <input type="number" id="baseY2" value="51"> -> <input type="number" id="resultY2" value="50"></p>
 
- <button type="button" onclick="myFunction()">Try it</button>
+ <button type="button" onclick="calculateEquation()">Calculate Telesci Equation</button>
 
- <p>(myFunction is stored in an external file called "myScript.js")</p>
+ <p> Desired X: <input type="number" id="inputX" value="0"></p>
+ <p> Desired Y: <input type="number" id="inputY" value="0"></p>
 
- <script src="myScript.js"></script>
+ <button type="button" onclick="buttonCalc()">Get coordinates for these values</button>
+ <p id="results">Results<br></p>
+
+ <script>
+ var xm = 0;
+ var ym = 0;
+ var xc = 0;
+ var yc = 0;
+
+ function calculateEquation() {
+
+   var baseX1=document.getElementById("baseX1").value;
+   var baseY1=document.getElementById("baseY1").value;
+   var baseX2=document.getElementById("baseX2").value;
+   var baseY2=document.getElementById("baseY2").value;
+   var resultX1=document.getElementById("resultX1").value;
+   var resultY1=document.getElementById("resultY1").value;
+   var resultX2=document.getElementById("resultX2").value;
+   var resultY2=document.getElementById("resultY2").value;
+
+   var xm = resultX2 - resultX1 / (baseX2 - baseX1);
+   var ym = resultY2 - resultY1 / (baseY2 - baseY1);
+   var xc = resultX1 - (baseX1 * xm);
+   var yc = resultY2 - (baseY1 * ym);
+   document.getElementById("equation").innerHTML="Equations:<br>x = "+xm+"b + "+xc+"<br>y = "+ym+"b + "+yc;
+ }
+
+ function calculate(xm, ym, xc, yc, xDes, yDes){
+   var xComp = (xDes/xm)-(xc/xm);
+   var yComp = (yDes/ym)-(yc/ym);
+   return {"x":xComp,"y":yComp};
+ }
+ function buttonCalc(){
+   var xDes = document.getElementById("inputX").value;
+   var yDes = document.getElementById("inputY").value;
+   var coords = calculate(xm, ym, xc, yc, xDes, yDes);
+   document.getElementById("results").innerHTML=document.getElementById("results").innerHTML+xDes+","+yDes+" = "+coords["x"]+","+coords["y"]+"<br>";
+ }
+ </script>
 </body>
 </html>
