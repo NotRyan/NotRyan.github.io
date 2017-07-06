@@ -19,6 +19,7 @@
  <button type="button" onclick="buttonCalc()">Get coordinates for these values</button>
  <p id="results">Results<br></p>
  <p id = "debug">debug</p>
+ <p id = "coords">Known locations<br></p>
  <script>
  var xm = 0;
  var ym = 0;
@@ -41,6 +42,7 @@
    xc = resultX1 - (baseX1 * xm);
    yc = resultY1 - (baseY1 * ym);
    document.getElementById("equation").innerHTML="Equations:<br>x = "+xm+"b + "+xc+"<br>y = "+ym+"b + "+yc;
+   calcKnownLocations();
  }
 
  function calculate(xm, ym, xc, yc, xDes, yDes){
@@ -57,6 +59,39 @@
    var coords = calculate(xm, ym, xc, yc, xDes, yDes);
    document.getElementById("results").innerHTML=document.getElementById("results").innerHTML+xDes+","+yDes+" = "+coords["x"]+","+coords["y"]+"<br>";
  }
+
+ function calcKnownLocations(){
+  locations = JSON.parse(text);
+   for (i=0;i<locations.artifacts.length;i++){
+     var xDes = locations.artifacts[i].x;
+     var yDes = locations.artifacts[i].y;
+     var name = locations.artifacts[i].name;
+     var coords = calculate(xm, ym, xc, yc, xDes, yDes);
+     document.getElementById("coords").innerHTML=document.getElementById("coords").innerHTML+name+" = "+coords["x"]+","+coords["y"]+"<br>";
+   }
+ }
+ //json
+ var text = '{ "artifacts" : [' +
+  '{ "name":"faintsignal1" , "x":228 , "y":45},' +
+  '{ "name":"faintsignal2" , "x":228 , "y":43},' +
+  '{ "name":"faintsignal3" , "x":230 , "y":43},' +
+  '{ "name":"russian1" , "x":202 , "y":180},' +
+  '{ "name":"russian2" , "x":204 , "y":180},' +
+  '{ "name":"salvage1" , "x":166 , "y":127},' +
+  '{ "name":"salvage2" , "x":168 , "y":127},' +
+  '{ "name":"space1" , "x":103 , "y":179},' +
+  '{ "name":"medship1" , "x":256 , "y":137},' +
+  '{ "name":"asteroid1" , "x":226 , "y":102},' +
+  '{ "name":"asteroid2" , "x":207 , "y":99},' +
+  '{ "name":"martian1" , "x":69 , "y":186},' +
+  '{ "name":"martian2" , "x":70 , "y":186},' +
+  '{ "name":"martian3" , "x":66 , "y":175},' +
+  '{ "name":"martian4" , "x":70 , "y":163},' +
+  '{ "name":"martian6" , "x":79 , "y":165},' +
+  '{ "name":"santa1" , "x":93 , "y":136},' +
+  '{ "name":"ccshuttle1" , "x":115 , "y":37},' +
+  '{ "name":"ccshuttle2" , "x":111 , "y":43}' +
+  ']}';
  </script>
 </body>
 </html>
